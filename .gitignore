@@ -1,0 +1,42 @@
+# Node modules
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# dotenv
+.env
+
+# Database (optional, if you store local SQLite or dump files)
+*.sqlite
+*.sqlite3
+*.db
+*.sql
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# VSCode
+.vscode/
+
+# Coverage
+coverage/
+
+# Build / dist
+dist/
+
+# Optional: PM2 logs or pids
+pids/
+*.pid
+*.seed
+
+# Nodemon
+nodemon-debug.log
+
+# ESLint cache
+.eslintcache
+
+.env
