@@ -22,7 +22,15 @@ import searchMiddleware from "../middleware/searchMiddleware.js";
 const router = Router();
 
 router.use((req, res, next) => {
-  if (req.path === "/login" || req.path === "/register" || req.path === "/verification" || req.path === "/resend-verification" || req.path === "/reset-password" || req.path === "/forgot-password") return next();
+  if (
+    req.path === "/login" ||
+    req.path === "/register" ||
+    req.path === "/verification" ||
+    req.path === "/resend-verification" ||
+    req.path === "/reset-password" ||
+    req.path === "/forgot-password"
+  )
+    return next();
   authMiddleware.validateToken(req, res, next);
 });
 
@@ -36,21 +44,33 @@ router.post("/reset-password", authController.resetPassword);
 router.get("/user", userController.index);
 router.post("/user", userMiddleware.store, userController.store);
 router.get("/user/:id", userMiddleware.show, userController.show);
-router.put("/user/coach/update/:id", userMiddleware.updateCoach, userController.updateCoach);
-router.delete("/user/coach/delete/:id", userMiddleware.deleteCoach, userController.deleteCoach);
+router.put(
+  "/user/coach/update/:id",
+  userMiddleware.updateCoach,
+  userController.updateCoach
+);
+router.delete(
+  "/user/coach/delete/:id",
+  userMiddleware.deleteCoach,
+  userController.deleteCoach
+);
 
 router.put("/profile/update/:id", userMiddleware.update, userController.update);
 
-router.get("/user/notif", notifController.index);
-router.get("/user/notif/:id", notifController.show);
-router.put("/user/notif/update/:id", notifController.update);
+router.get("/notif", notifController.index);
+router.get("/notif/:id", notifController.show);
+router.put("/notif/update/:id", notifController.update);
 
 router.get("/ujian", ujianController.index);
 router.post("/ujian", ujianMiddleware.store, ujianController.store);
 router.get("/ujian/:id", ujianController.show);
 router.put("/ujian/update/:id", ujianMiddleware.update, ujianController.update);
 router.delete("/ujian/delete/:id", ujianController.deleteUjian);
-router.post("/ujian/iscompleted", ujianMiddleware.ujianIsCompleted, ujianController.ujianIsCompleted);
+router.post(
+  "/ujian/iscompleted",
+  ujianMiddleware.ujianIsCompleted,
+  ujianController.ujianIsCompleted
+);
 
 router.get("/soal", soalController.index);
 router.post("/soal", soalMiddleware.store, soalController.store);
@@ -61,24 +81,56 @@ router.delete("/soal/delete/:id", soalController.deleteSoal);
 
 router.get("/latihan", latihanController.index);
 router.post("/latihan", latihanMiddleware.store, latihanController.store);
-router.put("/latihan/update/:id", latihanMiddleware.update, latihanController.update);
+router.put(
+  "/latihan/update/:id",
+  latihanMiddleware.update,
+  latihanController.update
+);
 router.get("/latihan/:id", latihanController.show);
-router.post("/latihan/iscompleted", latihanMiddleware.latihanIsCompleted, latihanController.latihanIsCompleted);
+router.post(
+  "/latihan/iscompleted",
+  latihanMiddleware.latihanIsCompleted,
+  latihanController.latihanIsCompleted
+);
 router.get("/latihan/get/kategori", latihanController.getKategori);
-router.delete("/latihan/delete/:id", latihanMiddleware.deleteLatihan, latihanController.deleteLatihan);
+router.delete(
+  "/latihan/delete/:id",
+  latihanMiddleware.deleteLatihan,
+  latihanController.deleteLatihan
+);
 
 router.get("/Booking", bookCoachMiddleware.index, bookCoachController.index);
 router.get("/Booking/:id", bookCoachMiddleware.show, bookCoachController.show);
 router.post("/Booking", bookCoachMiddleware.store, bookCoachController.store);
-router.put("/Booking/update/:id", bookCoachMiddleware.update, bookCoachController.update);
+router.put(
+  "/Booking/update/:id",
+  bookCoachMiddleware.update,
+  bookCoachController.update
+);
 
-router.post("/start-ujian", jawabanUjianMiddleware.startUjian, jawabanUjianController.startUjian);
-router.post("/answer", jawabanUjianMiddleware.store, jawabanUjianController.store);
-router.post("/submit-ujian", jawabanUjianMiddleware.submitUjian, jawabanUjianController.submitUjian);
+router.post(
+  "/start-ujian",
+  jawabanUjianMiddleware.startUjian,
+  jawabanUjianController.startUjian
+);
+router.post(
+  "/answer",
+  jawabanUjianMiddleware.store,
+  jawabanUjianController.store
+);
+router.post(
+  "/submit-ujian",
+  jawabanUjianMiddleware.submitUjian,
+  jawabanUjianController.submitUjian
+);
 
 router.get("/history", userUjianMiddleware.index, userUjianController.index);
 router.get("/statistik", userUjianMiddleware.show, userUjianController.show);
-router.get("/score/:id", userUjianMiddleware.getScore, userUjianController.getScore);
+router.get(
+  "/score/:id",
+  userUjianMiddleware.getScore,
+  userUjianController.getScore
+);
 
 router.get("/latihan-ujian", searchMiddleware.index, searchController.index);
 

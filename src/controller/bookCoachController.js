@@ -125,14 +125,36 @@ const update = async (req, res) => {
     let title, message, messageCoach;
 
     if (status == "approve") {
-      message = `Permintaan jadwal latihan Anda telah disetujui oleh Coach ${booking.coach.name}. Latihan dijadwalkan pada tanggal ${new Date(booking.date).toLocaleDateString("id-ID")} pukul ${booking.time.slice(
+      message = `Permintaan jadwal latihan Anda telah disetujui oleh Coach ${
+        booking.coach.name
+      }. Latihan dijadwalkan pada tanggal ${new Date(
+        booking.date
+      ).toLocaleDateString("id-ID")} pukul ${booking.time.slice(
         0,
         5
       )}. Silahkan datang pada waktu yang telah disetujui.`;
-      messageCoach = `Anda telah menyetujui jadwal latihan dengan ${booking.user.name} pada tanggal ${new Date(booking.date).toLocaleDateString("id-ID")} pukul ${booking.time.slice(0, 5)}. Silahkan datang pada waktu yang telah disetujui.`;
+      messageCoach = `Anda telah menyetujui jadwal latihan dengan ${
+        booking.user.name
+      } pada tanggal ${new Date(booking.date).toLocaleDateString(
+        "id-ID"
+      )} pukul ${booking.time.slice(
+        0,
+        5
+      )}. Silahkan datang pada waktu yang telah disetujui.`;
     } else if (status == "reject") {
-      message = `Permintaan jadwal latihan Anda pada tanggal ${new Date(booking.date).toLocaleDateString("id-ID")} pukul ${booking.time.slice(0, 5)} telah ditolak oleh Coach ${booking.coach.name} dengan alasan: ${reason}`;
-      messageCoach = `Anda telah menolak jadwal latihan dengan ${booking.user.name} pada tanggal ${new Date(booking.date).toLocaleDateString("id-ID")} pukul ${booking.time.slice(0, 5)} dengan alasan: ${reason}`;
+      message = `Permintaan jadwal latihan Anda pada tanggal ${new Date(
+        booking.date
+      ).toLocaleDateString("id-ID")} pukul ${booking.time.slice(
+        0,
+        5
+      )} telah ditolak oleh Coach ${
+        booking.coach.name
+      } dengan alasan: ${reason}`;
+      messageCoach = `Anda telah menolak jadwal latihan dengan ${
+        booking.user.name
+      } pada tanggal ${new Date(booking.date).toLocaleDateString(
+        "id-ID"
+      )} pukul ${booking.time.slice(0, 5)} dengan alasan: ${reason}`;
     } else {
       return res.status(400).json({
         meta: {
@@ -141,7 +163,9 @@ const update = async (req, res) => {
         },
       });
     }
-    reason ? await booking.update({ status, reason }) : await booking.update({ status });
+    reason
+      ? await booking.update({ status, reason })
+      : await booking.update({ status });
     await notif.create({
       receiverId: booking.userId,
       bookingCoachId: booking.id,
@@ -150,7 +174,7 @@ const update = async (req, res) => {
     await notif.create({
       receiverId: booking.coachId,
       bookingCoachId: booking.id,
-      messageCoach,
+      message: messageCoach,
     });
 
     return res.status(200).json({
